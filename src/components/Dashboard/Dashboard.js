@@ -1,14 +1,21 @@
-import React from "react";
-import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Layouts from "../Layouts";
 
 export const Dashboard = () => {
+  // const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     navigate("/");
+  //   }
+  // });
+
   return (
-    <div>
-      <Navbar />
-      <div className="flex">
-        <Sidebar />
-        <div className="w-full md:w-[81%] px-7 md:px-10 py-7 bg-gray-50 drk:bg-slate-700">
+    <Layouts>
+      <div className="w-screen">
+        <div className="lg:w-full xl:w-content min-h-[89vh] md:h-full px-7 md:px-10 py-7 bg-gray-50 drk:bg-slate-700">
           <h1 className="font-secular text-3xl md:text-2xl lg:text-3xl mb-7">Dashboard</h1>
           {/* Card*/}
           <div className="max-w-full max-h-fit flex flex-col sm:flex-row gap-3 md:gap-4 lg:gap-8 mb-7">
@@ -69,7 +76,7 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Layouts>
   );
 };
 

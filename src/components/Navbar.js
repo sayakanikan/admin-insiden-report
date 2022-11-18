@@ -13,7 +13,7 @@ const Navbar = () => {
           <div className="text-xs md:text-sm text-gray-500 drk:text-gray-400">Welcome back!</div>
           <div>Jese Leos</div>
         </div>
-        <img class="w-8 h-8 md:w-10 md:h-10 rounded-full text-sm md:text-md" src="profile.png" alt="Rounded avatar" />
+        <img className="w-8 h-8 md:w-10 md:h-10 rounded-full text-sm md:text-md" src="profile.png" alt="Rounded avatar" />
       </div>
     </nav>
   );

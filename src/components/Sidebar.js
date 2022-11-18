@@ -1,9 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = () => {
+    setIsLoading(true);
+    axios
+      .post("https://api-coba1.herokuapp.com/api/logout", {})
+      .then(() => {
+        navigate("/");
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err.response.statusText);
+        setIsLoading(false);
+      });
+  };
+
   return (
-    <aside className="w-30 md:w-44 lg:w-64" aria-label="Sidebar">
+    <aside className="w-30 md:min-w-max lg:w-80" aria-label="Sidebar">
       <div className="overflow-y-auto py-4 px-3 bg-white drk:bg-gray-800 drop-shadow-xl h-full md:h-[calc(100vh-70px)]">
         <ul className="space-y-2">
           <li>
@@ -75,7 +94,7 @@ const Sidebar = () => {
         </ul>
         <ul className="pt-4 mt-4 space-y-2 border-t border-gray-200 drk:border-gray-700">
           <li>
-            <Link to="/logout" className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg drk:text-white hover:bg-gray-100 drk:hover:bg-gray-700">
+            <button onClick={handleSubmit} className="flex items-center w-full text-left p-2 text-base font-normal text-gray-900 rounded-lg drk:text-white hover:bg-gray-100 drk:hover:bg-gray-700">
               <svg
                 className="flex-shrink-0 w-7 h-7 md:w-5 md:h-5 lg:w-6 lg:h-6 text-gray-500 transition duration-75 drk:text-gray-400 group-hover:text-gray-900 drk:group-hover:text-white"
                 fill="none"
@@ -86,7 +105,7 @@ const Sidebar = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
               <span className="hidden md:inline flex-1 ml-3 whitespace-nowrap text-sm md:text-md lg:text-base">Logout</span>
-            </Link>
+            </button>
           </li>
         </ul>
       </div>

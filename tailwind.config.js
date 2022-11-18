@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
+        content: "1105px",
       },
     },
     fontFamily: {

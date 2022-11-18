@@ -19,15 +19,23 @@ const Login = () => {
         username: username,
         password: password,
       })
-      .then(() => {
-        navigate("/dashboard");
+      .then((data) => {
+        // navigate("/dashboard");
+        console.log(data);
+        localStorage.setItem("status", data.message);
         setIsLoading(false);
       })
-      .catch((err) => {
-        setError(err.response.statusText);
+      .catch(() => {
+        setError("Username / Password salah");
         setIsLoading(false);
       });
   };
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   setIsLoading(true);
+
+  // };
 
   return (
     <div className="flex min-h-screen bg-blue-300">
