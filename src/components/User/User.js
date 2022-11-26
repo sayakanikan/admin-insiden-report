@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
-import Layouts from "../Layouts";
+import Layouts from "../Layouts/Layouts";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const User = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [dataUser, setDataUser] = useState([]);
+  const navigate = useNavigate();
 
   const data = () => {
     setIsLoading(true);
     axios
-      .get("https://api-coba1.herokuapp.com/api/alluser")
+      .get("http://127.0.0.1:8000/api/auth/getuser", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      })
       .then((data) => {
-        console.log(data);
+        // if (data.data.data.role_id === 0) {
+        // }
+        setDataUser(data.data.data);
+        // console.log(dataUser);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -22,11 +31,11 @@ const User = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-      data();
-    });
-    return () => clearTimeout(timer);
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      navigate("/");
+    }
+    data();
   }, []);
 
   return (
@@ -61,19 +70,19 @@ const User = () => {
                   <th scope="col" className="py-3 px-6">
                     Email
                   </th>
-                  <th scope="col" className="py-3 px-6">
+                  {/* <th scope="col" className="py-3 px-6">
                     Jumlah Laporan
-                  </th>
-                  <th scope="col" className="py-3 px-6">
+                  </th> */}
+                  {/* <th scope="col" className="py-3 px-6">
                     Tanggal Terakhir Lapor
-                  </th>
+                  </th> */}
                   <th scope="col" className="py-3 px-6">
                     Aksi
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {isLoading ? (
+              {isLoading ? (
+                <tbody>
                   <tr className="bg-white border-b drk:bg-gray-800 drk:border-gray-700">
                     <td className="py-4 px-6">
                       <div role="status" className="max-w-sm animate-pulse">
@@ -99,41 +108,33 @@ const User = () => {
                         <span className="sr-only">Loading...</span>
                       </div>
                     </td>
-                    <td className="py-4 px-6">
-                      <div role="status" className="max-w-sm animate-pulse">
-                        <div className="h-2 bg-gray-200 rounded-full drk:bg-gray-700 max-w-[300px] mb-2.5"></div>
-                        <span className="sr-only">Loading...</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6">
-                      <div role="status" className="max-w-sm animate-pulse">
-                        <div className="h-2 bg-gray-200 rounded-full drk:bg-gray-700 max-w-[300px] mb-2.5"></div>
-                        <span className="sr-only">Loading...</span>
-                      </div>
-                    </td>
                   </tr>
-                ) : (
-                  <tr className="bg-white border-b drk:bg-gray-800 drk:border-gray-700">
-                    <td className="py-4 px-6">1</td>
-                    <td className="py-4 px-6">Ali</td>
-                    <td className="py-4 px-6">ali@gmail.com</td>
-                    <td className="py-4 px-6">5</td>
-                    <td className="py-4 px-6">22/10/2022</td>
-                    <td className="py-4 px-6">
-                      <Link
-                        to="/user/31421"
-                        type="button"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-3 py-2.5 mr-2 mb-2 drk:bg-blue-600 drk:hover:bg-blue-700 focus:outline-none drk:focus:ring-blue-800"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
-                          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                        </svg>
-                      </Link>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
+                </tbody>
+              ) : (
+                <tbody>
+                  {dataUser.map((items, i) => (
+                    <tr className="bg-white border-b drk:bg-gray-800 drk:border-gray-700" key={i}>
+                      <td className="py-4 px-6">{i + 1}</td>
+                      <td className="py-4 px-6">{items.name}</td>
+                      <td className="py-4 px-6">{items.email}</td>
+                      {/* <td className="py-4 px-6">5</td> */}
+                      {/* <td className="py-4 px-6">22/10/2022</td> */}
+                      <td className="py-4 px-6">
+                        <Link
+                          to={`/user/${items.id}`}
+                          type="button"
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-3 py-2.5 mr-2 mb-2 drk:bg-blue-600 drk:hover:bg-blue-700 focus:outline-none drk:focus:ring-blue-800"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-eye" viewBox="0 0 16 16">
+                            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                          </svg>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
             </table>
           </div>
         </div>

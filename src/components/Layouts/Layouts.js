@@ -1,12 +1,12 @@
 import React from "react";
 import Navbar from "./Navbar";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Sidebar";
 
 const Layouts = ({ children }) => {
   return (
     <div>
       <Navbar />
-      <div className="flex">
+      <div className="flex h-full">
         <Sidebar />
         {children}
       </div>

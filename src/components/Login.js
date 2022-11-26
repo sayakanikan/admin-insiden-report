@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -15,15 +15,22 @@ const Login = () => {
     event.preventDefault();
     setIsLoading(true);
     axios
-      .post("https://api-coba1.herokuapp.com/api/login", {
+      .post("http://127.0.0.1:8000/api/auth/login", {
         username: username,
         password: password,
       })
       .then((data) => {
-        // navigate("/dashboard");
-        console.log(data);
-        localStorage.setItem("status", data.message);
         setIsLoading(false);
+        // console.log(data);
+        if (!data.data.role) {
+          setError("Anda bukan admin!");
+          navigate("/");
+        } else {
+          localStorage.setItem("jwt", data.data.access_token);
+          if (data.data.status === 200) {
+            navigate("/dashboard");
+          }
+        }
       })
       .catch(() => {
         setError("Username / Password salah");
@@ -31,11 +38,12 @@ const Login = () => {
       });
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   setIsLoading(true);
-
-  // };
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      navigate("/dashboard");
+    }
+  });
 
   return (
     <div className="flex min-h-screen bg-blue-300">
@@ -71,7 +79,7 @@ const Login = () => {
               placeholder="Masukan Password"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-xs md:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
               value={password}
-              // minlength="5"
+              minLength="5"
               onChange={(e) => setPassword(e.target.value)}
               required
             />
