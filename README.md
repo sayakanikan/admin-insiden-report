@@ -2,9 +2,9 @@
 
 # Tentang Aplikasi
 
-Aplikasi ini merupakan admin-side dari aplikasi insiden report. Aplikasi ini mengambil API dari link https://github.com/sayakanikan/api-insiden-report yang telah diupload di Heroku. 
+Aplikasi ini merupakan admin-side dari aplikasi insiden report. Aplikasi ini mengambil API dari link ... . Pengerjaan 90% 
 
-# Catatan
+## Catatan
 Username dan Password untuk login :
-- Username  : admin
-- Password  : 123
+- Username  : adminin
+- Password  : 12345
