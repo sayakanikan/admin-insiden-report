@@ -83,14 +83,14 @@ const Admin = () => {
             </div>
 
             <Link
-              to="/addAdmin"
+              to="/admin/add"
               className="relative items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white drk:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 drk:focus:ring-cyan-800 hidden md:inline-flex"
             >
               <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white drk:bg-gray-900 rounded-md group-hover:bg-opacity-0">Tambah Admin</span>
             </Link>
 
             <Link
-              to="/addAdmin"
+              to="/admin/add"
               className="relative items-center justify-center py-3 px-4 mb-2 overflow-hidden text-sm font-medium text-white rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white drk:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 drk:focus:ring-cyan-800 inline-flex md:hidden"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-plus inline md:hidden" viewBox="0 0 16 16">
@@ -118,7 +118,7 @@ const Admin = () => {
                     Email
                   </th>
                   {/* <th scope="col" className="py-3 px-6">
-                    Laporan Selesai
+                    Laporan Terselesaikan
                   </th> */}
                   <th scope="col" className="py-3 px-6">
                     Aksi
@@ -162,10 +162,10 @@ const Admin = () => {
                       <td className="py-4 px-6">{i + 1}</td>
                       <td className="py-4 px-6">{items.name}</td>
                       <td className="py-4 px-6">{items.email}</td>
-                      {/* <td className="py-4 px-6">5</td> */}
+                      {/* <td className="py-4 px-6">{items.laporan.length}</td> */}
                       <td className="py-4 px-6 flex items-center">
                         <Link
-                          to={`/detailAdmin/${items.id}`}
+                          to={`/admin/detail/${items.id}`}
                           type="button"
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-3 py-2.5 mr-2 mb-2 drk:bg-blue-600 drk:hover:bg-blue-700 focus:outline-none drk:focus:ring-blue-800"
                         >
@@ -175,7 +175,7 @@ const Admin = () => {
                           </svg>
                         </Link>
                         <Link
-                          to={`/updateAdmin/${items.id}`}
+                          to={`/admin/update/${items.id}`}
                           type="button"
                           className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg px-3 py-2.5 mr-2 mb-2 drk:focus:ring-yellow-900"
                         >

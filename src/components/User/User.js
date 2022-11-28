@@ -70,12 +70,9 @@ const User = () => {
                   <th scope="col" className="py-3 px-6">
                     Email
                   </th>
-                  {/* <th scope="col" className="py-3 px-6">
+                  <th scope="col" className="py-3 px-6">
                     Jumlah Laporan
-                  </th> */}
-                  {/* <th scope="col" className="py-3 px-6">
-                    Tanggal Terakhir Lapor
-                  </th> */}
+                  </th>
                   <th scope="col" className="py-3 px-6">
                     Aksi
                   </th>
@@ -84,6 +81,12 @@ const User = () => {
               {isLoading ? (
                 <tbody>
                   <tr className="bg-white border-b drk:bg-gray-800 drk:border-gray-700">
+                    <td className="py-4 px-6">
+                      <div role="status" className="max-w-sm animate-pulse">
+                        <div className="h-2 bg-gray-200 rounded-full drk:bg-gray-700 max-w-[300px] mb-2.5"></div>
+                        <span className="sr-only">Loading...</span>
+                      </div>
+                    </td>
                     <td className="py-4 px-6">
                       <div role="status" className="max-w-sm animate-pulse">
                         <div className="h-2 bg-gray-200 rounded-full drk:bg-gray-700 max-w-[300px] mb-2.5"></div>
@@ -117,8 +120,7 @@ const User = () => {
                       <td className="py-4 px-6">{i + 1}</td>
                       <td className="py-4 px-6">{items.name}</td>
                       <td className="py-4 px-6">{items.email}</td>
-                      {/* <td className="py-4 px-6">5</td> */}
-                      {/* <td className="py-4 px-6">22/10/2022</td> */}
+                      <td className="py-4 px-6">{items.laporan.length}</td>
                       <td className="py-4 px-6">
                         <Link
                           to={`/user/${items.id}`}

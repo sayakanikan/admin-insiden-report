@@ -79,10 +79,10 @@ const DetailUser = () => {
                 <span className="sr-only">Loading...</span>
               </div>
             ) : (
-              <div className="flex">
-                <img src="profile.png" width="100px" />
+              <div className="flex items-center">
+                <img src="../profile.png" width="100px" />
                 {dataAkun.map((items, i) => (
-                  <div key={i}>
+                  <div key={i} className="ml-4">
                     <h5>
                       <span className="mb-2 text-xl font-bold tracking-tight text-gray-900 drk:text-white">{items.name}</span> ( {items.username} ){" "}
                     </h5>
@@ -163,7 +163,7 @@ const DetailUser = () => {
                         <td className="py-4 px-6">{items.status ? "Selesai" : "Perlu Tindakan"}</td>
                         <td className="py-4 px-6">
                           <Link
-                            to={`/detailLaporan/${items.id}`}
+                            to={`/laporan/${items.id}`}
                             type="button"
                             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-3 py-2.5 mr-2 mb-2 drk:bg-blue-600 drk:hover:bg-blue-700 focus:outline-none drk:focus:ring-blue-800"
                           >

@@ -6,10 +6,12 @@ import Modal from "../Modal";
 
 const DetailLaporan = () => {
   const params = useParams();
+  const status = 1;
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dataLaporan, setDataLaporan] = useState([]);
+  const [admin, setAdmin] = useState([]);
 
   const data = () => {
     setIsLoading(true);
@@ -21,8 +23,9 @@ const DetailLaporan = () => {
       })
       .then((data) => {
         setIsLoading(false);
-        // console.log(data.data.laporan);
+        console.log(data.data);
         setDataLaporan(data.data.laporan);
+        setAdmin(data.data.admin);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -30,8 +33,32 @@ const DetailLaporan = () => {
       });
   };
 
+  const handleVerif = (id, event) => {
+    event.preventDefault();
+    setShow(false);
+    axios
+      .put(
+        `http://127.0.0.1:8000/api/auth/laporan/${id}`,
+        {
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
+      .then(() => {
+        navigate("/laporan");
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate("/laporan");
+      });
+  };
+
   useEffect(() => {
-    // setIsLoading(true);
     const token = localStorage.getItem("jwt");
     if (!token) {
       navigate("/");
@@ -77,7 +104,7 @@ const DetailLaporan = () => {
                 </Link>
 
                 <button className="focus:outline-none text-white bg-slate-400 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 drk:bg-slate-600 drk:hover:bg-slate-700 drk:focus:ring-slate-800 flex items-center" disabled>
-                  <svg class="inline mr-3 w-5 h-5 text-gray-200 animate-spin drk:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="inline mr-3 w-5 h-5 text-gray-200 animate-spin drk:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                       fill="currentColor"
@@ -95,13 +122,14 @@ const DetailLaporan = () => {
             <div>
               {dataLaporan.map((items, i) => (
                 <div className="block md:w-full p-6 bg-white border border-gray-200 rounded-lg shadow-md drk:bg-gray-800 drk:border-gray-700 md:mr-0" key={i}>
-                  <div className="flex mb-5 flex-col md:flex-row text-center md:text-left">
+                  <div className="flex mb-5 flex-col md:flex-row items-center text-center md:text-left">
                     <img src={items.foto} width="200px" alt="Foto Laporan" className="mx-auto md:mx-0 md:mr-8 md:mb-5" />
                     <div>
-                      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 drk:text-white">Dilaporkan oleh {items.user_id}</h5>
+                      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 drk:text-white">Dilaporkan oleh {items.user.name}</h5>
                       <p className="font-semibold text-gray-700 drk:text-gray-400 mt-1">Laporan : {items.laporan}</p>
                       <p className="font-semibold text-gray-700 drk:text-gray-400 mt-1">Dilaporkan Tanggal : {items.created_at}</p>
                       {items.status ? <p className="font-bold text-green-700 drk:text-gray-400 mt-1">Status : Selesai</p> : <p className="font-bold text-red-700 drk:text-gray-400 mt-1">Status : Perlu Tindakan</p>}
+                      {items.status ? <p className="font-bold text-green-700 drk:text-gray-400 mt-1">Diverifikasi Oleh : {admin.name}</p> : <p></p>}
                     </div>
                   </div>
 
@@ -146,7 +174,14 @@ const DetailLaporan = () => {
           )}
         </div>
       </div>
-      <Modal onClose={() => setShow(false)} show={show} pertanyaan="Anda yakin akan menyelesaikan laporan masalah ini?" jawaban="Selesaikan" />
+      <Modal
+        onClose={() => setShow(false)}
+        show={show}
+        pertanyaan="Anda yakin akan menyelesaikan laporan masalah ini?"
+        jawaban="Selesaikan"
+        warna="bg-green-600 hover:bg-green-800 focus:ring-green-300"
+        click={(e) => handleVerif(params.id, e)}
+      />
     </Layouts>
   );
 };

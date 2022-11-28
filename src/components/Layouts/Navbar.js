@@ -50,7 +50,7 @@ const Navbar = () => {
             <div>{akun}</div>
           )}
         </div>
-        <img className="w-8 h-8 md:w-10 md:h-10 rounded-full text-sm md:text-md" src="profile.png" alt="Avatar" />
+        <img className="w-8 h-8 md:w-10 md:h-10 rounded-full text-sm md:text-md" src="../profile.png" alt="Avatar" />
       </div>
     </nav>
   );

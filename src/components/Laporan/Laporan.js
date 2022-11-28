@@ -19,7 +19,7 @@ const Laporan = () => {
       })
       .then((data) => {
         setDataLaporan(data.data.laporan);
-        console.log(data.data.laporan);
+        // console.log(data.data.laporan);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -128,12 +128,12 @@ const Laporan = () => {
                     <tr key={i} className="bg-white border-b drk:bg-gray-800 drk:border-gray-700">
                       <td className="py-4 px-6">{i + 1}</td>
                       <td className="py-4 px-6">{items.laporan}</td>
-                      <td className="py-4 px-6">{items.name}</td>
+                      <td className="py-4 px-6">{items.user.name}</td>
                       <td className="py-4 px-6">{items.status ? "Selesai" : "Perlu Tindakan"}</td>
                       <td className="py-4 px-6">{items.created_at}</td>
                       <td className="py-4 px-6">
                         <Link
-                          to={`/detailLaporan/${items.id}`}
+                          to={`/laporan/${items.id}`}
                           type="button"
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-3 py-2.5 mr-2 mb-2 drk:bg-blue-600 drk:hover:bg-blue-700 focus:outline-none drk:focus:ring-blue-800"
                           img="profile.png"

@@ -57,10 +57,10 @@ const DetailAdmin = () => {
                 <span className="sr-only">Loading...</span>
               </div>
             ) : (
-              <div className="flex">
-                <img src="profile.png" width="100px" />
+              <div className="flex mb-5 flex-col md:flex-row items-center text-center md:text-left">
+                <img src="../profile.png" width="100px" />
                 {dataAkun.map((items, i) => (
-                  <div key={i}>
+                  <div key={i} className="mt-5 md:mt-0 md:ml-4">
                     <h5>
                       <span className="mb-2 text-xl font-bold tracking-tight text-gray-900 drk:text-white"> {items.name} </span> ( {items.username} ){" "}
                     </h5>
