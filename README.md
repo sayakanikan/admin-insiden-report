@@ -2,7 +2,7 @@
 
 # Tentang Aplikasi
 
-Aplikasi ini merupakan admin-side dari aplikasi insiden report. Aplikasi ini mengambil API dari link https://drive.google.com/file/d/1B3D8sAWIRx6fmgkZz441gbZC09VqIF13/view?usp=share_link.
+Aplikasi ini merupakan admin-side dari aplikasi insiden report yang dikembangkan dengan ReactJS dan TailwindCSS. Aplikasi ini mengambil API dari link https://drive.google.com/file/d/1B3D8sAWIRx6fmgkZz441gbZC09VqIF13/view?usp=share_link. (Data masih diambil secara local)
 
 ## Catatan
 Username dan Password untuk login :
