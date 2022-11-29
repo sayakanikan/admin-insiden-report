@@ -14,17 +14,6 @@ const UpdateAdmin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [error, setError] = useState("");
-  const [dataUpdate, setDataUpdate] = useState([
-    {
-      created_at: "",
-      email: "",
-      id: "",
-      name: "",
-      role_id: "",
-      updated_at: "",
-      username: "",
-    },
-  ]);
   const navigate = useNavigate();
 
   const data = () => {
@@ -37,8 +26,10 @@ const UpdateAdmin = () => {
       })
       .then((data) => {
         setIsLoadingData(false);
-        // console.log(dataUpdate);
-        setDataUpdate(data.data.data);
+        console.log(data.data.data);
+        setNama(data.data.data[0].name);
+        setUsername(data.data.data[0].username);
+        setEmail(data.data.data[0].email);
       })
       .catch((err) => {
         setIsLoadingData(false);
@@ -49,23 +40,34 @@ const UpdateAdmin = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
+    if (!password) {
+      setPassword(null);
+    }
     axios
-      .post("http://127.0.0.1:8000/api/auth/register", {
-        name: nama,
-        username: username,
-        email: email,
-        password: password,
-        role_id: 1,
-      })
+      .put(
+        `http://127.0.0.1:8000/api/auth/updateuser/${params.id}`,
+        {
+          name: nama,
+          username: username,
+          email: email,
+          password: password,
+          role_id: 1,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("jwt"),
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      )
       .then(() => {
         setIsLoading(false);
         // console.log(data);
-        navigate("/admin", { state: { id: 1, message: "Admin baru berhasil ditambahkan!" } });
+        navigate("/admin", { state: { id: 1, message: "Data admin berhasil diupdate!" } });
       })
       .catch((err) => {
         setIsLoading(false);
         setError(err);
-        // console.log(err);
       });
   };
 
@@ -84,7 +86,7 @@ const UpdateAdmin = () => {
           <h1 className="font-secular text-3xl mb-7">Update Admin</h1>
           <ErrorMessage error={error} />
           {/* Forms */}
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid md:grid-cols-2 md:gap-6">
               <div className="relative z-0 mb-6 w-full group">
                 <input
@@ -95,8 +97,8 @@ const UpdateAdmin = () => {
                   placeholder=" "
                   required
                   minLength="5"
-                  value={dataUpdate[0].name}
-                  onChange={(e) => setNama({ ...data, name: e.target.value })}
+                  value={nama}
+                  onChange={(e) => setNama(e.target.value)}
                   autoFocus
                 />
                 <label
@@ -115,7 +117,7 @@ const UpdateAdmin = () => {
                   placeholder=" "
                   required
                   minLength="5"
-                  value={dataUpdate[0].username}
+                  value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
                 <label
@@ -136,7 +138,7 @@ const UpdateAdmin = () => {
                 placeholder=" "
                 required
                 minLength="5"
-                value={dataUpdate[0].email}
+                value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <label
@@ -153,7 +155,7 @@ const UpdateAdmin = () => {
                 id="floating_password"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none drk:text-white drk:border-gray-600 drk:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                required
+                // required
                 minLength="5"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -211,7 +213,7 @@ const UpdateAdmin = () => {
                       fill="#1C64F2"
                     />
                   </svg>
-                  Menambahkan admin...
+                  Mengupdate data...
                 </button>
               ) : (
                 <button

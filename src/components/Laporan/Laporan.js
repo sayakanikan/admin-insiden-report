@@ -7,6 +7,7 @@ import Skeleton from "../Skeleton";
 const Laporan = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataLaporan, setDataLaporan] = useState([]);
+  // const [searchInput, setSearchInput] = useState("");
   const navigate = useNavigate();
 
   const data = () => {
@@ -27,6 +28,18 @@ const Laporan = () => {
         setIsLoading(false);
       });
   };
+
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   setSearchInput(e.target.value);
+  // };
+  // if (searchInput.length > 0) {
+  //   console.log(searchInput);
+  //   dataLaporan.filter((laporan) => {
+  //     return console.log(laporan.laporan.toLowerCase().includes(searchInput));
+  //     // return laporan.laporan.match(searchInput);
+  //   });
+  // }
 
   useEffect(() => {
     setIsLoading(true);
@@ -53,6 +66,8 @@ const Laporan = () => {
               type="text"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 pl-10 p-2.5 drk:bg-gray-700 drk:border-gray-600 drk:placeholder-gray-400 drk:text-white drk:focus:ring-blue-500 drk:focus:border-blue-500"
               placeholder="Search"
+              // onChange={handleSearch}
+              // value={searchInput}
             />
           </div>
           {/* Table */}
